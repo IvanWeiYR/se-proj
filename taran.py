@@ -10,22 +10,23 @@ def genRandom():
 
 	return input
 def main():
-	s,t = 3,2
+	s,t = 3,4
 	hue = [0 for x in range(s)]
-	testCov = genRandom()
+	#testCov = genRandom() 
+	testCov = [[1.0,1.0,0.0],[0.0,1.0,1.0],[1.0,0.0,0.0],[0.0,0.0,1.0]]
 	print(testCov)
 	
-	totalPassed = 0
-	totalFailed = 0 
+	totalPassed = 0.0
+	totalFailed = 0.0
 
 	for x in range(t):
-		if testCov[x][s-1] == 0:
+		if testCov[x][s-1] == 0.0:
 			totalPassed += 1
 	totalFailed = t - totalPassed
 
 	for x in range(s):
-		passed = 0
-		failed = 0
+		passed = 0.0
+		failed = 0.0
 		for y in range(t):
 			if testCov[y][x] == 1 and testCov[y][s-1] == 0:
 				passed +=1
