@@ -38,6 +38,3 @@ def partition(alist, first, last):
 
 	return left
 
-alist = [54,26,93,17,77,31,44,55,20]
-quickSort(alist)
-print(alist)
