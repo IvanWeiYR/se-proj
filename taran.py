@@ -9,12 +9,70 @@ def genRandom():
 			input[x][y] = randint(0,1)
 
 	return input
-def main():
-	s,t = 3,4
-	hue = [0 for x in range(s)]
+
+#quick sort
+def quickSort(alist,rank):
+	quickSortSplit(alist,0,len(alist)-1,rank)
+
+def quickSortSplit(alist,first,last,rank):
+	if first < last:
+		splitPoint = partition(alist,first,last,rank)
+
+		quickSortSplit(alist,first,splitPoint - 1,rank)
+		quickSortSplit(alist,splitPoint + 1, last,rank)
+
+def partition(alist, first, last,rank):
+	
+	pivot = alist[first]		
+
+	left = first + 1
+	right = last
+
+	done = False
+
+	while not done:
+
+		while left <= right and alist[left] <= pivot:
+			left = left + 1
+
+		while alist[right] >= pivot and right >= left:
+			right = right - 1
+
+		if right < left:
+			done = True
+		else:
+			temp = alist[left]
+			alist[left] = alist[right]
+			alist[right] = temp
+
+			temp1 = rank[left]
+			rank[left] = rank[right]
+			rank[right] = temp1
+
+
+	temp = alist[first]
+	alist[first] = alist[right]
+	alist[right] = temp
+
+	temp1 = rank[first]
+	rank[first] = rank[right]
+	rank[right] = temp1
+
+	return right
+
+
+#get score
+def getScore(test):
+	
 	#testCov = genRandom() 
-	testCov = [[1.0,1.0,0.0],[0.0,1.0,1.0],[1.0,0.0,0.0],[0.0,0.0,1.0]]
-	print(testCov)
+	#testCov = [[1.0,1.0,0.0],[0.0,1.0,1.0],[1.0,0.0,0.0],[0.0,0.0,1.0]]
+	
+	testCov = test
+   	s = len(testCov[0])
+   	t = len(testCov)
+	hue = [0 for x in range(s)]
+	sus = [0 for x in range(s)]
+	#print(testCov)
 	
 	totalPassed = 0.0
 	totalFailed = 0.0
@@ -35,11 +93,32 @@ def main():
 		testZero = passed*totalFailed+failed*totalPassed
 		if 	totalPassed == 0 or totalFailed == 0 or testZero == 0:
 			hue[x] = 0
+			sus[x] = 1
 		else:
 			hue[x] = (passed/totalPassed)/(passed/totalPassed+failed/totalFailed)
-	return hue
-
-hueArr = main()
-print(hueArr)
+			sus[x] = 1 - hue[x]
 
 
+	return sus,hue
+
+
+test = [
+    [1,1,1,1,0,1,1,0,0,0,0,0,1,0],
+    [1,1,1,1,1,0,0,0,0,0,0,0,1,0],
+    [1,1,1,0,0,0,0,1,1,1,0,0,1,0],
+    [1,1,1,0,0,0,0,1,1,0,1,0,1,0],
+    [1,1,1,1,0,1,0,0,0,0,0,0,1,0],
+    [1,1,1,1,0,1,1,0,0,0,0,0,1,1],
+    ]
+s = len(test[0])
+sus,hue = getScore(test)
+rank = [x for x in range(s)]
+
+
+sorted = list(sus)
+quickSort(sorted,rank)
+
+#rank will record index of the corresponding value in sorted
+print sus
+print sorted
+print rank
