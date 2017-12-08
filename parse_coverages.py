@@ -2,17 +2,21 @@ from os import listdir
 from os.path import isfile, join
 import xml.etree.ElementTree as ET
 
-def get_tests_matrix():
+def get_tests_matrix(folder, program_name):
 	tests_matrix = [];
 
-	for f in [f for f in listdir('test_sum') if isfile(join('test_sum', f))]:
+	for f in [f for f in listdir(folder) if isfile(join(folder, f))]:
 		print(f)
+		if not f.endswith('.xml'):
+			continue
 		test = []
-		tree = ET.parse('test_sum/' + f)
+		tree = ET.parse(folder + '/' + f)
+
+
 		root = tree.getroot()
 		for pkg in root.findall('.//package'):
 		    print(pkg.tag)
-		    for clazz in pkg.findall('.//class[@filename="sum.py"]'):
+		    for clazz in pkg.findall('.//class[@filename="' + program_name + '"]'):
 		        print(clazz.tag)
 		        for line in clazz.findall('.//line'):
 		            print('line ' + line.get('number') + ' : ' + line.get('hits'))
@@ -26,4 +30,5 @@ def get_tests_matrix():
 	return tests_matrix
 
 if __name__ == '__main__':
-	get_tests_matrix()
+	#get_tests_matrix('bubbleSort', 'bubbleSort.py')
+	get_tests_matrix('quickSort', 'quickSort.py')

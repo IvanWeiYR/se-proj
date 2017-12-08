@@ -1,4 +1,3 @@
-from sum import sum
 import cov
 from quickSort import quickSort
 from bubbleSort import bubbleSort
@@ -14,15 +13,15 @@ test_cases = [
 ]
 
 def start():
-	prefix = 'bubbleSort'
+	prefix = 'quickSort'
 	for tc in test_cases:
 		
 		copied_tc = copy.deepcopy(tc)
 
-		#quickSort(copied_tc)
-		bubbleSort(copied_tc)
 		tc.sort()
 		cov.begin()
+		quickSort(copied_tc)
+		#bubbleSort(copied_tc)
 		result = (copied_tc == tc)
 		cov.end(result, prefix, prefix + '_' + str(int(round(time.time() * 1000))) + '.xml') 
 
