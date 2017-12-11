@@ -1,29 +1,27 @@
 import cov
-from quickSort import quickSort
-from bubbleSort import bubbleSort
 import copy
 import time
+from os import listdir
+from os.path import isfile, join, basename, splitext
 
-test_cases = [
-	[54,26,93,17,77,31,44,55,20],
-	[2,3,35,56,6,23,5,100,5,2,-1], 
-	[45,2,3,50,48,1020,46,23,3,92,1], 
-	[2738,5432,67,4,5764,3,23,6,7,35,22,22],
-	[1,2,3,4,5,6,7]
-]
-
-def start():
-	prefix = 'quickSort'
-	for tc in test_cases:
-		
-		copied_tc = copy.deepcopy(tc)
-
-		tc.sort()
-		cov.begin()
-		quickSort(copied_tc)
-		#bubbleSort(copied_tc)
-		result = (copied_tc == tc)
-		cov.end(result, prefix, prefix + '_' + str(int(round(time.time() * 1000))) + '.xml') 
+def start(module_name, func_name, testcases_folder = 'tc'):
+	module = __import__(module_name)
+	func = getattr(module, func_name)
+	for f in [f for f in listdir(testcases_folder) if isfile(join(testcases_folder, f))]:
+		if not f.endswith('.txt'):
+			continue
+		with open('tc/' + f) as file:
+			line = file.readline()
+			contents = line.split()
+			origin_list = contents[0].split(',')
+			sorted_list = contents[1].split(',')
+			origin_list = list(map(int, origin_list))
+			sorted_list = list(map(int, sorted_list))
+			cov.begin()
+			func(origin_list)
+			result = (origin_list == sorted_list)
+			cov.end(result, module_name, splitext(basename(f))[0] + '.xml') 
+	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
 if __name__ == '__main__':
-	start()
+	start('quickSort', 'quickSort')
