@@ -10,8 +10,9 @@ def genRandom():
 
 	return input
 
-def insertonSort(alist, index):
-	rank = [len(alist) for x in range(c-1)]
+def insertonSort(alist):
+	index = [x for x in range(len(alist))]
+	rank = [1 for x in range(len(alist))]
 	for i in range(len(alist)):
 		key = alist[i]
 		val = index[i]
@@ -23,13 +24,21 @@ def insertonSort(alist, index):
 		alist[j+1] = key
 		index[j+1] = val
 
-	ranking = len(alist)
-	for i in range(len(alist)-1):
-		ranking -= 1
-		if alist[i] == alist[i+1]:
-	 		rank[index[i+1]] = rank[index[i]]
-	 	else:
-	 		rank[index[i+1]] = ranking
+	# ranking = len(alist)
+	# for i in range(len(alist)-1):
+	# 	ranking -= 1
+	# 	if alist[i] == alist[i+1]:
+	# 		rank[index[i+1]] = rank[index[i]]
+	# 	else:
+	# 		rank[index[i+1]] = ranking
+	# return rank
+	ranking = 1
+	for i in range(len(alist)-1,0,-1):
+		ranking += 1
+		if alist[i] == alist[i-1]:
+			rank[index[i-1]] = rank[index[i]]
+		else:
+			rank[index[i-1]] = ranking
 	return rank
 
 #get score
@@ -87,11 +96,11 @@ test = [
     ]
 c = len(test[0])
 sus,hue = getScore(test)
-index = [x for x in range(c-1)]
+
 
 
 sorted = list(sus)
-rank = insertonSort(sorted,index)
+rank = insertonSort(sorted)
 # for x in range(c-1,0,-1):
 # 	print("x is :",x)
 # 	if x > 0:
@@ -99,6 +108,8 @@ rank = insertonSort(sorted,index)
 # 			rank[x-2] = rank[x-1]
 
 #rank will record index of the corresponding value in sorted
-print sorted
 #indexes corresponding to statement no.
-print ("rank is :",rank)
+print ("sus: ",sus,"\n")
+print ("sorted: ",sorted,"\n")
+print ("rank is :",rank,"\n")
+print ("The most buggy statement is: Statement No.", rank.index(1)+1)
