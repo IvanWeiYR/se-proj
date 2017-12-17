@@ -1,4 +1,6 @@
 from random import *
+from parse_coverages import get_tests_matrix
+
 
 def genRandom():
 	s,t = 3,2
@@ -9,6 +11,7 @@ def genRandom():
 			input[x][y] = randint(0,1)
 
 	return input
+
 
 def insertonSort(alist):
 	index = [x for x in range(len(alist))]
@@ -58,9 +61,12 @@ def getScore(test):
 	totalFailed = 0.0
 
 	for x in range(r):
-		if testCov[x][c-1] == 0:
+		if testCov[x][-1] == 0:
 			totalPassed += 1
 	totalFailed = r - totalPassed
+	print('Total Passed: '+ str(totalPassed))
+	print('Total Failed: '+ str(totalFailed))
+
 
 	for x in range(c-1):
 		passed = 0.0
@@ -85,22 +91,25 @@ def getScore(test):
 
 	return sus,hue
 
+# test = [
+#     [1,1,1,1,0,1,1,0,0,0,0,0,1,0],
+#     [1,1,1,1,1,0,0,0,0,0,0,0,1,0],
+#     [1,1,1,0,0,0,0,1,1,1,0,0,1,0],
+#     [1,1,1,0,0,0,0,1,1,0,1,0,1,0],
+#     [1,1,1,1,0,1,0,0,0,0,0,0,1,0],
+#     [1,1,1,1,0,1,1,0,0,0,0,0,1,1],
+#     ]
 
-test = [
-    [1,1,1,1,0,1,1,0,0,0,0,0,1,0],
-    [1,1,1,1,1,0,0,0,0,0,0,0,1,0],
-    [1,1,1,0,0,0,0,1,1,1,0,0,1,0],
-    [1,1,1,0,0,0,0,1,1,0,1,0,1,0],
-    [1,1,1,1,0,1,0,0,0,0,0,0,1,0],
-    [1,1,1,1,0,1,1,0,0,0,0,0,1,1],
-    ]
+test = get_tests_matrix('qsort', 'qsort.py')
 c = len(test[0])
 sus,hue = getScore(test)
+index = [x for x in range(c-1)]
 
 
+sorted_list = list(sus)
+print(sorted_list)
+rank = insertonSort(sorted_list,index)
 
-sorted = list(sus)
-rank = insertonSort(sorted)
 # for x in range(c-1,0,-1):
 # 	print("x is :",x)
 # 	if x > 0:
@@ -108,8 +117,10 @@ rank = insertonSort(sorted)
 # 			rank[x-2] = rank[x-1]
 
 #rank will record index of the corresponding value in sorted
+
 #indexes corresponding to statement no.
 print ("sus: ",sus,"\n")
 print ("sorted: ",sorted,"\n")
 print ("rank is :",rank,"\n")
 print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+
