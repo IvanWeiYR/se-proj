@@ -35,7 +35,7 @@ def get_sorted_list(root):
                 done = 1
     return sorted_list
 def sort(alist = None):
-    if alist == None or len(alist) == 0:
+    if alist is None or len(alist) == 0:
         return 
     r = Node(alist[0])
     for i in range(1, len(alist)):
@@ -43,8 +43,16 @@ def sort(alist = None):
     return get_sorted_list(r)
 
 
-# if __name__ == "__main__":
-#     x = [-1, 399, 3,4,5,1,2,8,3,7,6]
-#     print(x)
-#     print(sort(x))
+if __name__ == "__main__":
+    x = [-1, 399, 3,4,5,1,2,8,3,7,6]
+    print(x)
+    sorted_list = sort(x)
+    print(sorted_list)
+    result = True
+    for i in range(1,len(sorted_list)):
+        if(sorted_list[i] < sorted_list[i-1]):
+            result = False
+
+    print(result)
+
 
