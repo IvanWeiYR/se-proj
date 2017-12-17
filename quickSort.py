@@ -1,6 +1,6 @@
 def quickSort(alist):
 	quickSortSplit(alist,0,len(alist)-1)
-	return alist
+
 
 def quickSortSplit(alist,first,last):
 	if first < last:
@@ -8,8 +8,7 @@ def quickSortSplit(alist,first,last):
 
 		quickSortSplit(alist,first,splitPoint - 1)
 		quickSortSplit(alist,splitPoint + 1, last)
-	else:
-		return alist
+
 
 def partition(alist, first, last):
 	
@@ -41,11 +40,9 @@ def partition(alist, first, last):
 
 	return left
 
-#alist = [54,26,93,17,77,31,44,55,20]
-#quickSort(alist)
-#print(alist)
 
 if __name__ == "__main__":
 	x = [3,4,5,1,2,8,3,7,6]
 	print(x)
 	print(quickSort(x))
+

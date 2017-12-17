@@ -11,6 +11,7 @@ def genRandom():
 
 	return input
 
+
 def insertonSort(alist):
 	index = [x for x in range(len(alist))]
 	rank = [1 for x in range(len(alist))]
@@ -42,6 +43,7 @@ def insertonSort(alist):
 			rank[index[i-1]] = ranking
 	return rank
 
+
 #get score
 def getScore(test):
 	
@@ -49,10 +51,12 @@ def getScore(test):
 	#testCov = [[1.0,1.0,0.0],[0.0,1.0,1.0],[1.0,0.0,0.0],[0.0,0.0,1.0]]
 	
 	testCov = test
+
 	c = len(testCov[0]) #num of columns
 	r = len(testCov) #num of rows
 	hue = [0 for x in range(c-1)]
 	sus = [0 for x in range(c-1)]
+
 	#print(testCov)
 	
 	totalPassed = 0.0
@@ -62,6 +66,7 @@ def getScore(test):
 		if testCov[x][c-1] == 0:
 			totalPassed += 1
 	totalFailed = r - totalPassed
+
 
 	for x in range(c-1):
 		passed = 0.0
@@ -84,6 +89,7 @@ def getScore(test):
 			sus[x] = 1.0 - hue[x]
 
 
+
 	return sus,hue
 
 
@@ -104,7 +110,10 @@ sus,hue = getScore(test)
 
 
 sorted_list = list(sus)
+
+print(sorted_list)
 rank = insertonSort(sorted_list)
+
 # for x in range(c-1,0,-1):
 # 	print("x is :",x)
 # 	if x > 0:
@@ -114,6 +123,8 @@ rank = insertonSort(sorted_list)
 #rank will record index of the corresponding value in sorted
 #indexes corresponding to statement no.
 print ("sus: ",sus,"\n")
+
 print ("sorted: ",sorted_list,"\n")
 print ("rank is :",rank,"\n")
 print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+
