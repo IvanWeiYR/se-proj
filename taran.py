@@ -12,6 +12,7 @@ def genRandom():
 
 	return input
 
+
 def insertonSort(alist):
 	index = [x for x in range(len(alist))]
 	rank = [1 for x in range(len(alist))]
@@ -43,6 +44,7 @@ def insertonSort(alist):
 			rank[index[i-1]] = ranking
 	return rank
 
+
 #get score
 def getScore(test):
 	
@@ -50,10 +52,12 @@ def getScore(test):
 	#testCov = [[1.0,1.0,0.0],[0.0,1.0,1.0],[1.0,0.0,0.0],[0.0,0.0,1.0]]
 	
 	testCov = test
+
 	c = len(testCov[0]) #num of columns
 	r = len(testCov) #num of rows
 	hue = [0 for x in range(c-1)]
 	sus = [0 for x in range(c-1)]
+
 	#print(testCov)
 	
 	totalPassed = 0.0
@@ -65,6 +69,7 @@ def getScore(test):
 	totalFailed = r - totalPassed
 	print('Total Passes: ' + str(totalPassed))
 	print('Total Fails: ' + str(totalFailed))
+
 
 	for x in range(c-1):
 		passed = 0.0
@@ -85,6 +90,7 @@ def getScore(test):
 		else:
 			hue[x] = (passed/totalPassed)/(passed/totalPassed+failed/totalFailed)
 			sus[x] = 1.0 - hue[x]
+
 
 
 	return sus,hue
@@ -108,3 +114,4 @@ if __name__ == "__main__":
 	print ("sorted: ",sorted_list,"\n")
 	print ("rank is :",rank,"\n")
 	print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+
