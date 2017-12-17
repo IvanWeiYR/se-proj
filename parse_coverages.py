@@ -3,7 +3,7 @@ from os.path import isfile, join
 import xml.etree.ElementTree as ET
 
 # folder: the name of folder contains coverage xml files
-# program_name: the name of the python program, i.e. XXXX.py
+# program_name: the name of the python program, i.e. XXXX for XXXX.py
 def get_tests_matrix(folder, program_name):
 	tests_matrix = [];
 
@@ -15,14 +15,18 @@ def get_tests_matrix(folder, program_name):
 
 		root = tree.getroot()
 		for pkg in root.findall('.//package'):
-			for clazz in pkg.findall('.//class[@filename="' + program_name + '"]'):
-				for line in clazz.findall('.//line'):
-					test.append(int(line.get('hits')))
+			for clazz in pkg.findall('.//class[@filename="' + program_name + '.py"]'):
+				lines = clazz.findall('.//line')
+				max_line = int(lines[-1].get('number'))
+				test = [0] * (max_line + 1)
+				for line in lines:
+					test[int(line.get('number')) - 1] = int(line.get('hits'))
 		result = root.find('result').get('pass')
-		test.append(int(result))
+		test[-1] = int(result)
 		tests_matrix.append(test)
 
 	return tests_matrix
 
 if __name__ == '__main__':
-	print(get_tests_matrix('quickSort', 'quickSort.py'))
+	m = get_tests_matrix('treesort_origin', 'treesort_origin')
+	print(m)
