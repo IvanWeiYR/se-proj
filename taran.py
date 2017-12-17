@@ -63,11 +63,9 @@ def getScore(test):
 	totalFailed = 0.0
 
 	for x in range(r):
-		if testCov[x][-1] == 0:
+		if testCov[x][c-1] == 0:
 			totalPassed += 1
 	totalFailed = r - totalPassed
-	print('Total Passed: '+ str(totalPassed))
-	print('Total Failed: '+ str(totalFailed))
 
 
 	for x in range(c-1):
@@ -104,15 +102,17 @@ def getScore(test):
 #     [1,1,1,1,0,1,1,0,0,0,0,0,1,1],
 #     ]
 
-test = get_tests_matrix('qsort', 'qsort.py')
+
+test = get_tests_matrix('quicksort_origin', 'quicksort_origin.py')
 c = len(test[0])
 sus,hue = getScore(test)
-index = [x for x in range(c-1)]
+
 
 
 sorted_list = list(sus)
+
 print(sorted_list)
-rank = insertonSort(sorted_list,index)
+rank = insertonSort(sorted_list)
 
 # for x in range(c-1,0,-1):
 # 	print("x is :",x)
@@ -121,9 +121,10 @@ rank = insertonSort(sorted_list,index)
 # 			rank[x-2] = rank[x-1]
 
 #rank will record index of the corresponding value in sorted
-
 #indexes corresponding to statement no.
 print ("sus: ",sus,"\n")
-print ("sorted: ",sorted,"\n")
+
+print ("sorted: ",sorted_list,"\n")
 print ("rank is :",rank,"\n")
 print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+
