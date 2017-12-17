@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 # folder: the name of folder contains coverage xml files
 # program_name: the name of the python program, i.e. XXXX for XXXX.py
 def get_tests_matrix(folder, program_name):
-	tests_matrix = [];
+	tests_matrix = []
 
 	for f in [f for f in listdir(folder) if isfile(join(folder, f))]:
 		if not f.endswith('.xml'):
@@ -23,10 +23,16 @@ def get_tests_matrix(folder, program_name):
 					test[int(line.get('number')) - 1] = int(line.get('hits'))
 		result = root.find('result').get('pass')
 		test[-1] = int(result)
+		print('-----')
+		print(f)
+		# alist = [x for x in range(44)]
+		# print(alist)
+		print(test)
+		print(len(test))
 		tests_matrix.append(test)
 
 	return tests_matrix
 
 if __name__ == '__main__':
-	m = get_tests_matrix('treesort_origin', 'treesort_origin')
-	print(m)
+	m = get_tests_matrix('count', 'count')
+	#print(m)

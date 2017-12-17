@@ -485,8 +485,8 @@ if __name__ == '__main__':
     
     print(train_dataset)
     print(train_labels)
-    params = train(train_dataset, train_labels)
-    # print(params)
-    test_dataset = getDataTest(train_dataset.shape[1])
-    result = predict(test_dataset, params)
-    print(result)
+    # params = train(train_dataset, train_labels)
+    # # print(params)
+    # test_dataset = getDataTest(train_dataset.shape[1])
+    # result = predict(test_dataset, params)
+    # print(result)

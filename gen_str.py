@@ -11,7 +11,7 @@ def gen_s1(n):
 #[\]^_`
 def gen_s2(n):
 	N = n
-	return ''.join(random.choice("[\]^_`") for _ in range(N))
+	return ''.join(random.choice("[]^_`") for _ in range(N))
 
 #{|}~
 def gen_s3(n):
@@ -50,8 +50,10 @@ def generate(num_of_tc = 25, dest = 'tc_str'):
 			s1 = random.randint(0,5)
 			s2 = random.randint(0,5)
 			s3 = random.randint(0,5)
-			s = gen_str(up,lo,num,s1,s2,s3)
-			count_list = [up,lo,num,s1,s2,s3]
+			#s = gen_str(up,0,0,0,0,0)
+			s = gen_str(up,lo,num,0,0,0)
+			#count_list = [up,0,0,0,0,0]
+			count_list = [up,lo,num,0,0,0]
 			count_list_str = ",".join(str(x) for x in count_list)
 			f.write(s + ' ' + count_list_str + '\n') 
 
