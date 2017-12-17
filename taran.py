@@ -1,7 +1,6 @@
 from random import *
 from parse_coverages import get_tests_matrix
 
-
 def genRandom():
 	s,t = 3,2
 
@@ -44,6 +43,7 @@ def insertonSort(alist):
 			rank[index[i-1]] = ranking
 	return rank
 
+
 #get score
 def getScore(test):
 	
@@ -51,10 +51,12 @@ def getScore(test):
 	#testCov = [[1.0,1.0,0.0],[0.0,1.0,1.0],[1.0,0.0,0.0],[0.0,0.0,1.0]]
 	
 	testCov = test
+
 	c = len(testCov[0]) #num of columns
 	r = len(testCov) #num of rows
 	hue = [0 for x in range(c-1)]
 	sus = [0 for x in range(c-1)]
+
 	#print(testCov)
 	
 	totalPassed = 0.0
@@ -89,7 +91,9 @@ def getScore(test):
 			sus[x] = 1.0 - hue[x]
 
 
+
 	return sus,hue
+
 
 # test = [
 #     [1,1,1,1,0,1,1,0,0,0,0,0,1,0],
@@ -123,4 +127,3 @@ print ("sus: ",sus,"\n")
 print ("sorted: ",sorted,"\n")
 print ("rank is :",rank,"\n")
 print ("The most buggy statement is: Statement No.", rank.index(1)+1)
-
