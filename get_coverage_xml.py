@@ -11,7 +11,7 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 	for f in [f for f in listdir(testcases_folder) if isfile(join(testcases_folder, f))]:
 		if not f.endswith('.txt'):
 			continue
-		with open('tc/' + f) as file:
+		with open(testcases_folder + '/' + f) as file:
 			line = file.readline()
 			contents = line.split()
 			origin_list = contents[0].split(',')
@@ -19,8 +19,8 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 			origin_list = list(map(int, origin_list))
 			sorted_list = list(map(int, sorted_list))
 			cov.begin()
-			origin_list = func(origin_list)
-			result = (origin_list == sorted_list)
+			computed_list = func(origin_list)
+			result = (computed_list == sorted_list)
 			cov.end(result, module_name, module_name, splitext(basename(f))[0] + '.xml') 
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
@@ -31,4 +31,4 @@ if __name__ == '__main__':
 	parser.add_argument('--src', default='tc', type=str, help='name of source folder containing testcase .txt files, default: \'tc\'')
 
 	args = parser.parse_args()
-	start(args.module, args.func)
+	start(args.module, args.func, args.src)
