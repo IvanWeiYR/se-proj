@@ -24,4 +24,4 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
 if __name__ == '__main__':
-	start('qsort', 'qsort')
+	start('quickSort', 'quickSort')
