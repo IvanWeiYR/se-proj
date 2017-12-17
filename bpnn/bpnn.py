@@ -44,14 +44,15 @@ def sigmoid_backward(dA, cache):
     Returns:
     dZ -- Gradient of the cost with respect to Z
     """
-    
     Z = cache
     
     s = 1/(1+np.exp(-Z))
     dA = np.squeeze(np.asarray(dA))
     s = np.squeeze(np.asarray(s))
     dZ = dA * s * (1-s)
-    dZ = dZ.reshape((1, dZ.shape[0]))
+
+    if (Z.shape[0] == 1):
+        dZ = dZ.reshape((1, dZ.shape[0]))
     
     assert (dZ.shape == Z.shape)
     
@@ -109,7 +110,7 @@ def initialize_parameters_deep(layer_dims):
                     bl -- bias vector of shape (layer_dims[l], 1)
     """
     
-    np.random.seed(3)
+    np.random.seed(5)
     parameters = {}
     L = len(layer_dims)            # number of layers in the network
  
@@ -118,6 +119,7 @@ def initialize_parameters_deep(layer_dims):
         parameters['b' + str(l)] = np.zeros((layer_dims[l], 1))
         assert(parameters['W' + str(l)].shape == (layer_dims[l], layer_dims[l-1]))
         assert(parameters['b' + str(l)].shape == (layer_dims[l], 1))
+    # print(parameters)
     return parameters
 
 def linear_forward(A, W, b):
@@ -133,8 +135,12 @@ def linear_forward(A, W, b):
     Z -- the input of the activation function, also called pre-activation parameter 
     cache -- a python dictionary containing "A", "W" and "b" ; stored for computing the backward pass efficiently
     """
-
+    # print ('linear_forward')
+    # print ('W',W)
+    # print ('A',A)
+    # print ('b',b)
     Z = np.dot(W, A) + b
+    # print ('Z',Z)
 
     assert(Z.shape == (W.shape[0], A.shape[1]))
     cache = (A, W, b)
@@ -156,7 +162,6 @@ def linear_activation_forward(A_prev, W, b, activation):
     cache -- a python dictionary containing "linear_cache" and "activation_cache";
              stored for computing the backward pass efficiently
     """
-    
     if activation == "sigmoid":
         # Inputs: "A_prev, W, b". Outputs: "A, activation_cache".
         Z, linear_cache = linear_forward(A_prev, W, b)
@@ -186,7 +191,6 @@ def L_model_forward(X, parameters):
                 every cache of linear_relu_forward() (there are L-1 of them, indexed from 0 to L-2)
                 the cache of linear_sigmoid_forward() (there is one, indexed L-1)
     """
- 
     caches = []
     A = X
     L = len(parameters) // 2                  # number of layers in the neural network
@@ -194,7 +198,7 @@ def L_model_forward(X, parameters):
     # Implement [LINEAR -> RELU]*(L-1). Add "cache" to the "caches" list.
     for l in range(1, L):
         A_prev = A 
-        A, cache = linear_activation_forward(A_prev, parameters['W' + str(l)], parameters['b' + str(l)], "relu")
+        A, cache = linear_activation_forward(A_prev, parameters['W' + str(l)], parameters['b' + str(l)], "sigmoid")
         caches.append(cache)
     
     # Implement LINEAR -> SIGMOID. Add "cache" to the "caches" list.
@@ -310,7 +314,7 @@ def L_model_backward(AL, Y, caches):
         # lth layer: (RELU -> LINEAR) gradients.
         # Inputs: "grads["dA" + str(l + 2)], caches". Outputs: "grads["dA" + str(l + 1)] , grads["dW" + str(l + 1)] , grads["db" + str(l + 1)] 
         current_cache = caches[l]
-        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 2)], current_cache, "relu")
+        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 2)], current_cache, "sigmoid")
         grads["dA" + str(l + 1)] = dA_prev_temp
         grads["dW" + str(l + 1)] = dW_temp
         grads["db" + str(l + 1)] = db_temp
@@ -340,12 +344,12 @@ def update_parameters(parameters, grads, learning_rate):
         
     return parameters
 
-def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, print_cost=False):#lr was 0.009
+def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, print_cost=False, filename='plot.png'):#lr was 0.009
     """
     Implements a L-layer neural network: [LINEAR->RELU]*(L-1)->LINEAR->SIGMOID.
     
     Arguments:
-    X -- data, numpy array of shape (number of examples, num_px * num_px * 3)
+    X -- data, numpy array of shape (number of examples, input number)
     Y -- true "label" vector (containing 0 if cat, 1 if non-cat), of shape (1, number of examples)
     layers_dims -- list containing the input size and each layer size, of length (number of layers + 1).
     learning_rate -- learning rate of the gradient descent update rule
@@ -355,18 +359,17 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
     Returns:
     parameters -- parameters learnt by the model. They can then be used to predict.
     """
- 
     np.random.seed(1)
-    costs = []                         # keep track of cost
-    
+    costs = [] # keep track of cost
+
     # Parameters initialization.
     parameters = initialize_parameters_deep(layers_dims)
     
     # Loop (gradient descent)
     for i in range(0, num_iterations):
- 
+        # print ('iteration:', i, '---------------------------')
         # Forward propagation: [LINEAR -> RELU]*(L-1) -> LINEAR -> SIGMOID.
-        AL, caches = L_model_forward(X, parameters)
+        AL, caches = L_model_forward(X.T, parameters)
 
         # Compute cost.
         cost = compute_cost(AL, Y)
@@ -380,6 +383,7 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
         # Print the cost every 100 training example
         if print_cost and i % 100 == 0:
             print ("Cost after iteration %i: %f" %(i, cost))
+            print (AL)
         if print_cost and i % 100 == 0:
             costs.append(cost)
             
@@ -388,7 +392,8 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
     plt.ylabel('cost')
     plt.xlabel('iterations (per tens)')
     plt.title("Learning rate =" + str(learning_rate))
-    plt.show()
+    # plt.show()
+    plt.savefig(filename)
     
     return parameters
 
@@ -416,13 +421,51 @@ def getData():
     #     dataset, labels, test_size = .1, random_state = 12)
     return dataset, labels
 
-def train(train_dataset, train_labels):
-    layers_dims = [train_dataset.shape[1],5,5,5,1]
-    train_labels = np.array([train_labels])
-    parameters = L_layer_model(train_dataset.T, train_labels, layers_dims, num_iterations = 2500, print_cost = True)
-    return parameters
+def getDataTest(dim):
+    # estimate the suspiciousness of each statement
+    test_susp_dataset = np.identity(dim)
+    return test_susp_dataset
 
+def predict(X, parameters):
+    """
+    This function is used to predict the results of a  L-layer neural network.
+    
+    Arguments:
+    X -- data set of examples you would like to label
+    parameters -- parameters of the trained model
+    
+    Returns:
+    p -- predictions for the given dataset X
+    """
+    
+    m = X.shape[1]
+    n = len(parameters) // 2 # number of layers in the neural network
+    # p = np.zeros((1,m))
+    
+    # Forward propagation
+    probas, caches = L_model_forward(X, parameters)
+ 
+    # # convert probas to 0/1 predictions
+    # for i in range(0, probas.shape[1]):
+    #     if probas[0,i] > 0.5:
+    #         p[0,i] = 1
+    #     else:
+    #         p[0,i] = 0
+    
+    # print("Accuracy: "  + str(np.sum((p == y)/m)))
+        
+    return probas
+
+def train(train_dataset, train_labels):
+    layers_dims = [train_dataset.shape[1],5,5,1]
+    train_labels = np.array([train_labels])
+    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.1, num_iterations = 11000, print_cost = True, filename='paper1.png')
+    return parameters
 
 if __name__ == '__main__':
     train_dataset, train_labels = getData()
-    paras = train(train_dataset, train_labels)
+    params = train(train_dataset, train_labels)
+    # print(params)
+    test_dataset = getDataTest(train_dataset.shape[1])
+    result = predict(test_dataset, params)
+    print(result)
