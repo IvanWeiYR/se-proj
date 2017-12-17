@@ -14,13 +14,12 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 		with open(testcases_folder + '/' + f) as file:
 			line = file.readline()
 			contents = line.split()
-			origin_list = contents[0].split(',')
-			sorted_list = contents[1].split(',')
-			origin_list = list(map(int, origin_list))
-			sorted_list = list(map(int, sorted_list))
+			inp = contents[0]
+			out = contents[1].split(',')
+			out = list(map(int, out))
 			cov.begin()
-			origin_list = func(origin_list)
-			result = (origin_list == sorted_list)
+			computed_list = func(inp)
+			result = (computed_list == out)
 			cov.end(result, module_name, module_name, splitext(basename(f))[0] + '.xml') 
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 

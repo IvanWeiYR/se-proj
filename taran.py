@@ -42,7 +42,7 @@ def insertonSort(alist):
 			rank[index[i-1]] = rank[index[i]]
 		else:
 			rank[index[i-1]] = ranking
-	return rank
+	return rank,index
 
 
 #get score
@@ -106,12 +106,17 @@ if __name__ == "__main__":
 	sus,hue = getScore(matrix)
 
 	sorted_list = list(sus)
-	rank = insertonSort(sorted_list)
+	rank, index = insertonSort(sorted_list)
 
 	#rank will record index of the corresponding value in sorted
 	#indexes corresponding to statement no.
 	print ("sus: ",sus,"\n")
 	print ("sorted: ",sorted_list,"\n")
+	print ("index:", index,"\n")
 	print ("rank is :",rank,"\n")
 	print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+
+
+	for i in range(len(rank)-1,0,-1):
+		print("Statement {:>2}: {:>4}".format(index[i]+1,rank[index[i]]))
 
