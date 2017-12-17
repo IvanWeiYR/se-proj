@@ -384,9 +384,9 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
         parameters = update_parameters(parameters, grads, learning_rate)
                 
         # Print the cost every 100 training example
-        if print_cost and i % 100 == 0:
-            print ("Cost after iteration %i: %f" %(i, cost))
-            print (AL)
+        # if print_cost and i % 100 == 0:
+            # print ("Cost after iteration %i: %f" %(i, cost))
+            # print (AL)
         if print_cost and i % 100 == 0:
             costs.append(cost)
             
@@ -466,10 +466,32 @@ def predict(X, parameters):
         
     return probas
 
+def insertonSort(alist):
+    index = [x for x in range(len(alist))]
+    rank = [1 for x in range(len(alist))]
+    for i in range(len(alist)):
+        key = alist[i]
+        val = index[i]
+        j = i - 1 
+        while j >= 0 and alist[j] > key:
+            alist[j+1] = alist[j]
+            index[j+1] = index[j]
+            j -= 1
+        alist[j+1] = key
+        index[j+1] = val
+    ranking = 1
+    for i in range(len(alist)-1,0,-1):
+        ranking += 1
+        if alist[i] == alist[i-1]:
+            rank[index[i-1]] = rank[index[i]]
+        else:
+            rank[index[i-1]] = ranking
+    return rank,index
+
 def train(train_dataset, train_labels):
     layers_dims = [train_dataset.shape[1],5,5,1]
     train_labels = np.array([train_labels])
-    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.1, num_iterations = 7000, print_cost = True, filename='paper1.png')
+    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.3, num_iterations = 15000, print_cost = True, filename='case2.1.png')
     return parameters
 
 if __name__ == '__main__':
@@ -483,10 +505,22 @@ if __name__ == '__main__':
 
     train_dataset, train_labels = getData(matrix)
     
-    print(train_dataset)
-    print(train_labels)
-    # params = train(train_dataset, train_labels)
-    # # print(params)
-    # test_dataset = getDataTest(train_dataset.shape[1])
-    # result = predict(test_dataset, params)
-    # print(result)
+    # print(train_dataset)
+    # print(train_labels)
+    params = train(train_dataset, train_labels)
+    # print(params)
+    test_dataset = getDataTest(train_dataset.shape[1])
+    result = predict(test_dataset, params)
+    print(result)
+    #sus = result
+    # print(np.squeeze(np.asarray(result)))
+    rank, index= insertonSort(np.squeeze(np.asarray(result)))
+    # print ("sus: ",sus,"\n")
+    # print ("sorted: ",result,"\n")
+    # print ("index:", index,"\n")
+    # print ("rank is :",rank,"\n")
+    # print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+    #print(len(rank))
+    for i in range(len(rank)-1,-1,-1):
+        #print("i is:", i)
+        print("Statement {:>2}: {:>4}".format(index[i]+1,rank[index[i]]))

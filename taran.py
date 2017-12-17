@@ -117,6 +117,6 @@ if __name__ == "__main__":
 	print ("The most buggy statement is: Statement No.", rank.index(1)+1)
 
 
-	for i in range(len(rank)-1,0,-1):
+	for i in range(len(rank)-1,-1,-1):
 		print("Statement {:>2}: {:>4}".format(index[i]+1,rank[index[i]]))
 

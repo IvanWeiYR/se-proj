@@ -19,13 +19,14 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 			inp = contents[0]
 			out = contents[1].split(',')
 			out = list(map(int, out))
+			cov.erase()
 			cov.begin()
 			computed_list = func(inp)
 			print(computed_list)
 			print(out)
 			result = (computed_list == out)
-			print(result)
-			cov.end(result, module_name, module_name, splitext(basename(f))[0] + '.xml') 
+			print(result) 
+			cov.end(result, module_name, module_name, splitext(basename(f))[0]) 
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
 if __name__ == '__main__':

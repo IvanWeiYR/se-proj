@@ -44,16 +44,16 @@ def generate(num_of_tc = 25, dest = 'tc_str'):
 		
 		with open(dest + '/testcases_' + str(i) + '.txt', 'w') as f:
 			# random gen
-			up = random.randint(0,5)
-			lo = random.randint(0,5)
-			num = random.randint(0,5)
-			s1 = random.randint(0,5)
-			s2 = random.randint(0,5)
-			s3 = random.randint(0,5)
+			up = random.randint(0,3)
+			lo = random.randint(0,3)
+			num = random.randint(0,3)
+			s1 = random.randint(0,3)
+			s2 = random.randint(0,3)
+			s3 = random.randint(0,3)
 			#s = gen_str(up,0,0,0,0,0)
-			s = gen_str(up,lo,num,0,0,0)
+			s = gen_str(up,lo,num,s1,s2,s3)
 			#count_list = [up,0,0,0,0,0]
-			count_list = [up,lo,num,0,0,0]
+			count_list = [up,lo,num,s1,s2,s3]
 			count_list_str = ",".join(str(x) for x in count_list)
 			f.write(s + ' ' + count_list_str + '\n') 
 
