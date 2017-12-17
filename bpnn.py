@@ -4,6 +4,9 @@ import h5py
 import matplotlib.pyplot as plt
 import scipy
 from sklearn.model_selection import train_test_split
+from parse_coverages import get_tests_matrix
+import argparse
+
 # from PIL import Image
  
 # %matplotlib inline
@@ -397,7 +400,14 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
     
     return parameters
 
-def getData():
+def getData(m):
+    matrix = np.matrix(m).astype(int)
+    labels = np.squeeze(np.asarray(matrix[:, -1]))
+    dataset = matrix[:, 0:-1]
+    return dataset, labels
+
+
+def getData1():
     # in this case; num_features = num_statements
     # num_input = num_test_cases
     dataset = np.matrix([
@@ -459,11 +469,20 @@ def predict(X, parameters):
 def train(train_dataset, train_labels):
     layers_dims = [train_dataset.shape[1],5,5,1]
     train_labels = np.array([train_labels])
-    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.1, num_iterations = 10000, print_cost = True, filename='paper1.png')
+    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.1, num_iterations = 7000, print_cost = True, filename='paper1.png')
     return parameters
 
 if __name__ == '__main__':
-    train_dataset, train_labels = getData()
+    parser = argparse.ArgumentParser(description='Run Tarantula to find localize fault from coverage XML files')
+    parser.add_argument('source', type=str, help='name of the folder containing coverage .xml file')
+    parser.add_argument('prog_name', type=str, help='name of program, i.e. \'sort\' for sort.py')
+
+    args = parser.parse_args()
+
+    matrix = get_tests_matrix(args.source, args.prog_name)
+
+    train_dataset, train_labels = getData(matrix)
+    
     print(train_dataset)
     print(train_labels)
     params = train(train_dataset, train_labels)
