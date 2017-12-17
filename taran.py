@@ -11,8 +11,9 @@ def genRandom():
 
 	return input
 
-def insertonSort(alist, index):
-	rank = [len(alist) for x in range(c-1)]
+def insertonSort(alist):
+	index = [x for x in range(len(alist))]
+	rank = [1 for x in range(len(alist))]
 	for i in range(len(alist)):
 		key = alist[i]
 		val = index[i]
@@ -24,13 +25,21 @@ def insertonSort(alist, index):
 		alist[j+1] = key
 		index[j+1] = val
 
-	ranking = len(alist)
-	for i in range(len(alist)-1):
-		ranking -= 1
-		if alist[i] == alist[i+1]:
-			rank[index[i+1]] = rank[index[i]]
+	# ranking = len(alist)
+	# for i in range(len(alist)-1):
+	# 	ranking -= 1
+	# 	if alist[i] == alist[i+1]:
+	# 		rank[index[i+1]] = rank[index[i]]
+	# 	else:
+	# 		rank[index[i+1]] = ranking
+	# return rank
+	ranking = 1
+	for i in range(len(alist)-1,0,-1):
+		ranking += 1
+		if alist[i] == alist[i-1]:
+			rank[index[i-1]] = rank[index[i]]
 		else:
-			rank[index[i+1]] = ranking
+			rank[index[i-1]] = ranking
 	return rank
 
 #get score
@@ -50,11 +59,9 @@ def getScore(test):
 	totalFailed = 0.0
 
 	for x in range(r):
-		if testCov[x][-1] == 0:
+		if testCov[x][c-1] == 0:
 			totalPassed += 1
 	totalFailed = r - totalPassed
-	print('Total Passed: '+ str(totalPassed))
-	print('Total Failed: '+ str(totalFailed))
 
 	for x in range(c-1):
 		passed = 0.0
@@ -89,15 +96,15 @@ def getScore(test):
 #     [1,1,1,1,0,1,1,0,0,0,0,0,1,1],
 #     ]
 
-test = get_tests_matrix('qsort', 'qsort.py')
+
+test = get_tests_matrix('quicksort_origin', 'quicksort_origin.py')
 c = len(test[0])
 sus,hue = getScore(test)
-index = [x for x in range(c-1)]
+
 
 
 sorted_list = list(sus)
-print(sorted_list)
-rank = insertonSort(sorted_list,index)
+rank = insertonSort(sorted_list)
 # for x in range(c-1,0,-1):
 # 	print("x is :",x)
 # 	if x > 0:
@@ -105,6 +112,8 @@ rank = insertonSort(sorted_list,index)
 # 			rank[x-2] = rank[x-1]
 
 #rank will record index of the corresponding value in sorted
-
 #indexes corresponding to statement no.
-print("rank is :",rank)
+print ("sus: ",sus,"\n")
+print ("sorted: ",sorted_list,"\n")
+print ("rank is :",rank,"\n")
+print ("The most buggy statement is: Statement No.", rank.index(1)+1)
