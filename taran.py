@@ -1,5 +1,6 @@
 from random import *
 from parse_coverages import get_tests_matrix
+import argparse
 
 def genRandom():
 	s,t = 3,2
@@ -66,6 +67,8 @@ def getScore(test):
 		if testCov[x][c-1] == 0:
 			totalPassed += 1
 	totalFailed = r - totalPassed
+	print('Total Passes: ' + str(totalPassed))
+	print('Total Fails: ' + str(totalFailed))
 
 
 	for x in range(c-1):
@@ -92,39 +95,23 @@ def getScore(test):
 
 	return sus,hue
 
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description='Run Tarantula to find localize fault from coverage XML files')
+	parser.add_argument('source', type=str, help='name of the folder containing coverage .xml file')
+	parser.add_argument('prog_name', type=str, help='name of program, i.e. \'sort\' for sort.py')
 
-# test = [
-#     [1,1,1,1,0,1,1,0,0,0,0,0,1,0],
-#     [1,1,1,1,1,0,0,0,0,0,0,0,1,0],
-#     [1,1,1,0,0,0,0,1,1,1,0,0,1,0],
-#     [1,1,1,0,0,0,0,1,1,0,1,0,1,0],
-#     [1,1,1,1,0,1,0,0,0,0,0,0,1,0],
-#     [1,1,1,1,0,1,1,0,0,0,0,0,1,1],
-#     ]
+	args = parser.parse_args()
 
+	matrix = get_tests_matrix(args.source, args.prog_name)
+	sus,hue = getScore(matrix)
 
-test = get_tests_matrix('quicksort_origin', 'quicksort_origin.py')
-c = len(test[0])
-sus,hue = getScore(test)
+	sorted_list = list(sus)
+	rank = insertonSort(sorted_list)
 
-
-
-sorted_list = list(sus)
-
-print(sorted_list)
-rank = insertonSort(sorted_list)
-
-# for x in range(c-1,0,-1):
-# 	print("x is :",x)
-# 	if x > 0:
-# 		if sorted[x-1] == sorted[x-2]:
-# 			rank[x-2] = rank[x-1]
-
-#rank will record index of the corresponding value in sorted
-#indexes corresponding to statement no.
-print ("sus: ",sus,"\n")
-
-print ("sorted: ",sorted_list,"\n")
-print ("rank is :",rank,"\n")
-print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+	#rank will record index of the corresponding value in sorted
+	#indexes corresponding to statement no.
+	print ("sus: ",sus,"\n")
+	print ("sorted: ",sorted_list,"\n")
+	print ("rank is :",rank,"\n")
+	print ("The most buggy statement is: Statement No.", rank.index(1)+1)
 

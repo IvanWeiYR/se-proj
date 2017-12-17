@@ -7,10 +7,10 @@ cov = coverage.Coverage()
 def begin():
 	cov.start()
 
-def end(isPass, folder = 'reports', report_name = 'coverage_with_result.xml'):
+def end(isPass, program_name, folder = 'reports', report_name = 'coverage_with_result.xml'):
 	cov.stop()
 	cov.save()
-	cov.xml_report()
+	cov.xml_report(omit=['cov.py'])
 	tree = ET.parse('coverage.xml')
 	root = tree.getroot()
 	result = ET.SubElement(root, 'result')
