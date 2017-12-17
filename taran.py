@@ -1,6 +1,7 @@
 from random import *
 from parse_coverages import get_tests_matrix
 
+
 def genRandom():
 	s,t = 3,2
 
@@ -11,8 +12,10 @@ def genRandom():
 
 	return input
 
-def insertonSort(alist, index):
-	rank = [len(alist) for x in range(c-1)]
+
+def insertonSort(alist):
+	index = [x for x in range(len(alist))]
+	rank = [1 for x in range(len(alist))]
 	for i in range(len(alist)):
 		key = alist[i]
 		val = index[i]
@@ -24,13 +27,21 @@ def insertonSort(alist, index):
 		alist[j+1] = key
 		index[j+1] = val
 
-	ranking = len(alist)
-	for i in range(len(alist)-1):
-		ranking -= 1
-		if alist[i] == alist[i+1]:
-			rank[index[i+1]] = rank[index[i]]
+	# ranking = len(alist)
+	# for i in range(len(alist)-1):
+	# 	ranking -= 1
+	# 	if alist[i] == alist[i+1]:
+	# 		rank[index[i+1]] = rank[index[i]]
+	# 	else:
+	# 		rank[index[i+1]] = ranking
+	# return rank
+	ranking = 1
+	for i in range(len(alist)-1,0,-1):
+		ranking += 1
+		if alist[i] == alist[i-1]:
+			rank[index[i-1]] = rank[index[i]]
 		else:
-			rank[index[i+1]] = ranking
+			rank[index[i-1]] = ranking
 	return rank
 
 #get score
@@ -56,6 +67,7 @@ def getScore(test):
 	print('Total Passed: '+ str(totalPassed))
 	print('Total Failed: '+ str(totalFailed))
 
+
 	for x in range(c-1):
 		passed = 0.0
 		failed = 0.0
@@ -79,7 +91,6 @@ def getScore(test):
 
 	return sus,hue
 
-
 # test = [
 #     [1,1,1,1,0,1,1,0,0,0,0,0,1,0],
 #     [1,1,1,1,1,0,0,0,0,0,0,0,1,0],
@@ -98,6 +109,7 @@ index = [x for x in range(c-1)]
 sorted_list = list(sus)
 print(sorted_list)
 rank = insertonSort(sorted_list,index)
+
 # for x in range(c-1,0,-1):
 # 	print("x is :",x)
 # 	if x > 0:
@@ -107,4 +119,8 @@ rank = insertonSort(sorted_list,index)
 #rank will record index of the corresponding value in sorted
 
 #indexes corresponding to statement no.
-print("rank is :",rank)
+print ("sus: ",sus,"\n")
+print ("sorted: ",sorted,"\n")
+print ("rank is :",rank,"\n")
+print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+
