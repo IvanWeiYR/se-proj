@@ -3,7 +3,8 @@ def generate(folder_name = 'tc'):
 	for i in range(1000):
 		with open(folder_name + '/testcases_' + str(i) + '.txt', 'w') as f:
 			testcase = []
-			n = random.randint(1, 101)
+			#n = random.randint(1, 101)
+			n = 25
 			for j in range(n):
 				val = random.randint(1, 1001)
 				testcase.append(val)

@@ -18,10 +18,10 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 			origin_list = list(map(int, origin_list))
 			sorted_list = list(map(int, sorted_list))
 			cov.begin()
-			func(origin_list)
+			origin_list = func(origin_list)
 			result = (origin_list == sorted_list)
 			cov.end(result, module_name, splitext(basename(f))[0] + '.xml') 
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
 if __name__ == '__main__':
-	start('quickSort', 'quickSort')
+	start('qsort', 'qsort')

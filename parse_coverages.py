@@ -25,4 +25,4 @@ def get_tests_matrix(folder, program_name):
 	return tests_matrix
 
 if __name__ == '__main__':
-	get_tests_matrix('quickSort', 'quickSort.py')
+	print(get_tests_matrix('quickSort', 'quickSort.py'))
