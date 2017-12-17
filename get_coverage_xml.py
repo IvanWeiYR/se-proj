@@ -21,7 +21,7 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 			cov.begin()
 			origin_list = func(origin_list)
 			result = (origin_list == sorted_list)
-			cov.end(result, module_name, splitext(basename(f))[0] + '.xml') 
+			cov.end(result, module_name, module_name, splitext(basename(f))[0] + '.xml') 
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
 if __name__ == '__main__':

@@ -1,4 +1,3 @@
-
 def partition(alist, low, high):
 	pivot = alist[high]
 	i = low - 1
@@ -12,14 +11,11 @@ def partition(alist, low, high):
 	alist[i+1] = alist[high]
 	alist[high] = temp
 	return i+1
-
 def quicksort(alist, low, high):
 	if low <= high:
 		pivot = partition(alist, low, high)
-
 		quicksort(alist, low, pivot-1)
 		quicksort(alist, pivot+1, high)
-
 def sort(alist):
 	quicksort(alist, 0, len(alist)-1)
 	return alist
