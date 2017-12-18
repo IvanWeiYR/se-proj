@@ -110,11 +110,11 @@ if __name__ == "__main__":
 
 	#rank will record index of the corresponding value in sorted
 	#indexes corresponding to statement no.
-	print ("sus: ",sus,"\n")
-	print ("sorted: ",sorted_list,"\n")
-	print ("index:", index,"\n")
-	print ("rank is :",rank,"\n")
-	print ("The most buggy statement is: Statement No.", rank.index(1)+1)
+	# print ("sus: ",sus,"\n")
+	# print ("sorted: ",sorted_list,"\n")
+	# print ("index:", index,"\n")
+	# print ("rank is :",rank,"\n")
+	# print ("The most buggy statement is: Statement No.", rank.index(1)+1)
 
 
 	for i in range(len(rank)-1,-1,-1):

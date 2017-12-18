@@ -7,7 +7,7 @@ def binary_insert(root, node):
     if root is None:
         root = node
     else:
-        if root.data > node.data:
+        if root.data >> node.data:
             if root.left is None:
                 root.left = node
             else:

@@ -9,23 +9,24 @@ def start(module_name, func_name, testcases_folder = 'tc'):
 	module = __import__(module_name)
 	func = getattr(module, func_name)
 	for f in [f for f in listdir(testcases_folder) if isfile(join(testcases_folder, f))]:
-		print('----')
-		print(f)
 		if not f.endswith('.txt'):
 			continue
 		with open(testcases_folder + '/' + f) as file:
 			line = file.readline()
 			contents = line.split()
-			inp = contents[0]
-			out = contents[1].split(',')
-			out = list(map(int, out))
-			cov.erase()
+			origin_list = contents[0].split(',')
+			origin_list = list(map(int, origin_list))
 			cov.begin()
-			computed_list = func(inp)
-			print(computed_list)
-			print(out)
-			result = (computed_list == out)
-			print(result) 
+			sorted_list = func(origin_list)
+
+			result = True
+			if(len(origin_list) != len(sorted_list)):
+				result = False
+			else:
+				for i in range(1,len(sorted_list)):
+					if(sorted_list[i] < sorted_list[i-1]):
+						result = False
+						break
 			cov.end(result, module_name, module_name, splitext(basename(f))[0]) 
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
