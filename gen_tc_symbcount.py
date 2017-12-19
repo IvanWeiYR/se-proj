@@ -59,9 +59,9 @@ def generate(num_of_tc = 25, dest = 'tc_symbcount'):
 
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Generate testcases for sorting algorithms')
-	parser.add_argument('--ntc', default=25, type=int, help='number of testcases, default: 25')
-	parser.add_argument('--dest', default='tc_symbcount', type=str, help='destination folder to store the testcase .txt file, default: \'tc\'')
+	parser = argparse.ArgumentParser(description='Generate testcases for sorting algorithms', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+	parser.add_argument('--ntc', default=25, type=int, help='number of testcases')
+	parser.add_argument('--dest', default='tc_symbcount', type=str, help='destination folder to store the testcase .txt file')
 
 	args = parser.parse_args()
 	generate(args.ntc, args.dest)
