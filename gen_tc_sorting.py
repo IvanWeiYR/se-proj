@@ -2,7 +2,7 @@ import random
 import os
 import argparse
 
-def generate(num_of_tc = 25, n = 5, max = 1001, dest = 'tc'):
+def generate(num_of_tc = 25, n = 5, max = 1001, dest = 'tc_sorting'):
 	if not os.path.exists(dest):
 		os.makedirs(dest)
 	for i in range(num_of_tc):
@@ -21,11 +21,11 @@ def generate(num_of_tc = 25, n = 5, max = 1001, dest = 'tc'):
 
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Generate testcases for sorting algorithms')
-	parser.add_argument('--ntc', default=25, type=int, help='number of testcases, default: 25')
-	parser.add_argument('--len', default=5, type=int, help='length of list, default: 5')
-	parser.add_argument('--max', default=1001, type=int, help='maximum value for each element in list, default: 1001')
-	parser.add_argument('--dest', default='tc', type=str, help='destination folder to store the testcase .txt file, default: \'tc\'')
+	parser = argparse.ArgumentParser(description='Generate testcases for sorting algorithms', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+	parser.add_argument('--ntc', default=25, type=int, help='number of testcases')
+	parser.add_argument('--len', default=5, type=int, help='length of list')
+	parser.add_argument('--max', default=1001, type=int, help='maximum value for each element in list')
+	parser.add_argument('--dest', default='tc_sorting', type=str, help='destination folder to store the testcase .txt file')
 
 	args = parser.parse_args()
 	generate(args.ntc, args.len, args.max, args.dest)

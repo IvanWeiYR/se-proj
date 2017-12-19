@@ -25,10 +25,10 @@ def start(module_name, func_name, testcases_folder = 'tc_symbcount'):
 	print('Generated coverage XML files at folder \'' + module_name + '\'')
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Generate coverage .xml file from testcases for sorting algorithm')
+	parser = argparse.ArgumentParser(description='Generate coverage .xml file from testcases for sorting algorithm', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 	parser.add_argument('module', type=str, help='name of the module')
-	parser.add_argument('func', type=str, help='name of entrance function')
-	parser.add_argument('--src', default='tc_symbcount', type=str, help='name of source folder containing testcase .txt files, default: \'tc\'')
+	parser.add_argument('func', type=str, help='name of entry function')
+	parser.add_argument('--src', default='tc_symbcount', type=str, help='name of source folder containing testcase .txt files')
 
 	args = parser.parse_args()
 	start(args.module, args.func, args.src)

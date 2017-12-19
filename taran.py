@@ -96,7 +96,7 @@ def getScore(test):
 	return sus,hue
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Run Tarantula to find localize fault from coverage XML files')
+	parser = argparse.ArgumentParser(description='Run Tarantula to locate fault against coverage XML files')
 	parser.add_argument('source', type=str, help='name of the folder containing coverage .xml file')
 	parser.add_argument('prog_name', type=str, help='name of program, i.e. \'sort\' for sort.py')
 
