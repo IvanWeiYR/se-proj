@@ -262,7 +262,7 @@ def train(train_dataset, train_labels):
     # output layers: one neuron
     layers_dims = [train_dataset.shape[1],5,5,1]
     train_labels = np.array([train_labels])
-    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.3, num_iterations = 15000, print_cost = True, filename='plog.png')
+    parameters = L_layer_model(train_dataset, train_labels, layers_dims, learning_rate = 0.3, num_iterations = 15000, print_cost = True, filename='bpnn_learning_cost.png')
     return parameters
 
 if __name__ == '__main__':
