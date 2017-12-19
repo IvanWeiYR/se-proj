@@ -11,7 +11,7 @@ def count(alist):
 	while(i>=0):
 		s = alist[i]
 		if ord('A') <= ord(s) and ord('Z') >= ord(s): 
-			upperLetter += 1
+			upperLetter += 2
 		elif ord('a') <= ord(s) and ord('z') >= ord(s):
 			lowerLetter += 1
 		elif ord('0') <= ord(s) and ord('9') >= ord(s):

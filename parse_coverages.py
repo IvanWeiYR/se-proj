@@ -23,12 +23,6 @@ def get_tests_matrix(folder, program_name):
 					test[int(line.get('number')) - 1] = int(line.get('hits'))
 		result = root.find('result').get('pass')
 		test[-1] = int(result)
-		print('-----')
-		print(f)
-		# alist = [x for x in range(44)]
-		# print(alist)
-		print(test)
-		print(len(test))
 		tests_matrix.append(test)
 
 	return tests_matrix

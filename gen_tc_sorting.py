@@ -13,10 +13,10 @@ def generate(num_of_tc = 25, n = 5, max = 1001, dest = 'tc'):
 			for j in range(n):
 				val = random.randint(1, max)
 				testcase.append(val)
+			# if(i%5==0):
+			# 	testcase.sort()
 			origin_list_str = ",".join(str(x) for x in testcase)
-			testcase.sort()
-			sorted_list_str = ",".join(str(x) for x in testcase)
-			f.write(origin_list_str + ' ' + sorted_list_str + '\n')
+			f.write(origin_list_str + '\n')
 	print('Generated testcases.txt')
 
 

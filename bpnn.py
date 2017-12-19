@@ -384,9 +384,9 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
         parameters = update_parameters(parameters, grads, learning_rate)
                 
         # Print the cost every 100 training example
-        # if print_cost and i % 100 == 0:
-            # print ("Cost after iteration %i: %f" %(i, cost))
-            # print (AL)
+        if print_cost and i % 100 == 0:
+            print ("Cost after iteration %i: %f" %(i, cost))
+            print (AL)
         if print_cost and i % 100 == 0:
             costs.append(cost)
             

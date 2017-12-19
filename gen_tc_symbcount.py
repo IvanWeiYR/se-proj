@@ -37,7 +37,7 @@ def gen_str(up,lo,num,s1,s2,s3):
 	s = gen_upper(up) + gen_lower(lo) + gen_digit(num) + gen_s1(s1) + gen_s2(s2) + gen_s3(s3)
 	return s
 
-def generate(num_of_tc = 25, dest = 'tc_str'):
+def generate(num_of_tc = 25, dest = 'tc_symbcount'):
 	if not os.path.exists(dest):
 		os.makedirs(dest)
 	for i in range(num_of_tc):
@@ -61,7 +61,7 @@ def generate(num_of_tc = 25, dest = 'tc_str'):
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Generate testcases for sorting algorithms')
 	parser.add_argument('--ntc', default=25, type=int, help='number of testcases, default: 25')
-	parser.add_argument('--dest', default='tc_str', type=str, help='destination folder to store the testcase .txt file, default: \'tc\'')
+	parser.add_argument('--dest', default='tc_symbcount', type=str, help='destination folder to store the testcase .txt file, default: \'tc\'')
 
 	args = parser.parse_args()
 	generate(args.ntc, args.dest)
