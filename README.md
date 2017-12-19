@@ -5,6 +5,8 @@
 
 *Find example in run_xxxx.sh*
 
+---
+
 #### Sorting Algorithms
 ##### 1 . Generate testcases:
 ```text
@@ -43,7 +45,7 @@ optional arguments:
 Output one XML file for each test case, see section **Sample coverage.xml**
 
 
-
+---
 #### Symbol Counting problem
 
 ##### 1 . Generate testcases:
@@ -80,6 +82,8 @@ optional arguments:
 ```
 Output one XML file for each test case, see section **Sample coverage.xml**
 
+---
+
 #### Sample coverage.xml
 ```xml
 <?xml version='1.0' encoding='us-ascii'?>
@@ -114,6 +118,7 @@ Output one XML file for each test case, see section **Sample coverage.xml**
 ```
 *Tag result - Attribute pass: 0 for passed, 1 for failed*
 
+---
 
 #### Run Tarantula 
 e.g. python3 taran.py treesort_v1 treesort_v1
@@ -124,6 +129,9 @@ positional arguments:
   source      name of the folder containing coverage .xml file
   prog_name   name of program, i.e. 'sort' for sort.py
 ```
+
+---
+
 #### Run BPNN
 e.g. python3 bpnn.py treesort_v1 treesort_v1
 ```text
@@ -134,6 +142,7 @@ positional arguments:
   prog_name   name of program, i.e. 'sort' for sort.py
 ``` 
 
+---
 
 #### Programs:
 | Program (Symbol counting) | # of bugs | Line # of bugs|
